@@ -4,5 +4,6 @@
     {
         public int DirectorId { get; set; }
         public string DirectorName { get; set; }
+        public List<Movie> Movies { get; set; }
     }
 }

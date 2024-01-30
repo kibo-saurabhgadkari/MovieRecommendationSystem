@@ -11,14 +11,14 @@ namespace MovieRecommendation.Infrastructure.Mappings
             CreateMap<EF.Movie, D.Movie>()
                 .ForMember(dest => dest.MovieId, opt => opt.MapFrom(src => src.MovieId))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                .ForMember(dest => dest.Director, opt => opt.MapFrom(src => src.Director));
+                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genres))
+                .ForMember(dest => dest.Director, opt => opt.MapFrom(src => src.Directors));
 
             CreateMap<D.Movie, EF.Movie>()
                 .ForMember(dest => dest.MovieId, opt => opt.MapFrom(src => src.MovieId))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
-                .ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre))
-                .ForMember(dest => dest.Director, opt => opt.MapFrom(src => src.Director));
+                .ForMember(dest => dest.Genres, opt => opt.MapFrom(src => src.Genre))
+                .ForMember(dest => dest.Directors, opt => opt.MapFrom(src => src.Director));
         }        
     }
 
