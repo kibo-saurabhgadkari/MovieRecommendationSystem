@@ -182,5 +182,10 @@ namespace MovieRecommendation.Application
 
             return score;
         }
+
+        public IEnumerable<Recommendation> GetRecommendations(object userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
