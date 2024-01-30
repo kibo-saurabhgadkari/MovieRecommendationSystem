@@ -8,6 +8,9 @@ namespace MovieRecommendation.Infrastructure
         public DbSet<Movie> Movies { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserPreferences> UserPreferences { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Director> Directors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -16,8 +19,8 @@ namespace MovieRecommendation.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-                .OwnsOne(u => u.Preferences);
+            //modelBuilder.Entity<User>()
+            //    .OwnsOne(u => u.Preferences);
         }
     }    
 }
