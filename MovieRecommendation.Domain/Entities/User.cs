@@ -9,5 +9,11 @@ namespace MovieRecommendation.Domain.Entities
         public List<Role> Roles { get; set; }
         public List<Movie> WatchedMovies { get; set; }
         public UserPreferences Preferences { get; set; }
+
+        public User(int userId, string userName) 
+        {
+            UserId = userId;
+            UserName = userName;
+        }
     }
 }
