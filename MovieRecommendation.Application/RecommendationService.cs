@@ -21,11 +21,11 @@ namespace MovieRecommendation.Application
         {
             var movie = new Movie(title);
             _movieRepository.AddMovie(movie);
-        }        
+        }
 
         public void GenerateRecommendations(User user)
         {
-            var unwatchedMovies = _movieRepository.GetAllMovies().Where(m=> !user.WatchedMovies.Contains(m)).ToList();
+            var unwatchedMovies = _movieRepository.GetAllMovies().Where(m => !user.WatchedMovies.Contains(m)).ToList();
 
             var recommendations = CalculateRelevanceScore(unwatchedMovies, user.Preferences);
 
@@ -161,7 +161,7 @@ namespace MovieRecommendation.Application
             #endregion
 
             return recommendations;
-        
+
         }
 
         private double CalculateScore(Movie movie, UserPreferences preferences)
@@ -169,13 +169,13 @@ namespace MovieRecommendation.Application
             var score = 0.0;
 
             // Example: If the movie genre matches the user's preferred genre, add to the score
-            if (preferences.PreferredGenres.Contains(movie.Genre))
+            if (preferences.PreferredGenres.Any(p => movie.Genres.Contains(p)))
             {
                 score += 1.0;
             }
 
             // Example: If the movie is directed by a preferred director, add to the score
-            if (preferences.PreferredDirectors.Contains(movie.Director))
+            if (preferences.PreferredDirectors.Any(d => movie.Directors.Contains(d)))
             {
                 score += 0.5;
             }

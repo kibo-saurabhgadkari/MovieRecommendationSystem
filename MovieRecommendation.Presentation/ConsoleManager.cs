@@ -41,7 +41,7 @@ public class ConsoleManager
         Console.WriteLine("Available Movies:");
         foreach (var movie in movies)
         {
-            Console.WriteLine($"{movie.MovieId}. {movie.Title} - {movie.Genre} - {movie.Director}");
+            Console.WriteLine($"{movie.MovieId}. {movie.Title} - {movie.Genres} - {movie.Directors}");
         }
 
         // View Recommendations
