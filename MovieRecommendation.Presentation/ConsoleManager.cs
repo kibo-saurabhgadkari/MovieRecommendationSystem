@@ -37,7 +37,7 @@ public class ConsoleManager
         var loggedInUser = _userService.LoginUser(loginUsername, loginPassword);
 
         // Explore Movies
-        var movies = _movieService.GetMovies();
+        var movies = _movieService.GetAllMovies();
         Console.WriteLine("Available Movies:");
         foreach (var movie in movies)
         {

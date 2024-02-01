@@ -1,6 +1,7 @@
 ﻿// Program.cs
 using Microsoft.Extensions.DependencyInjection;
 using MovieRecommendation.Application;
+using MovieRecommendation.Domain.Handlers;
 using MovieRecommendation.Domain.Repository;
 using MovieRecommendation.Infrastructure;
 using MovieRecommendation.Infrastructure.Repository;
@@ -11,10 +12,13 @@ class Program
     {
         var serviceProvider = new ServiceCollection()
             .AddSingleton<ConsoleManager>()
-            .AddSingleton<UserService>()  // Assuming you have a UserService in the Application layer
-            .AddSingleton<MovieService>() // Assuming you have a MovieService in the Application layer
-            .AddSingleton<RecommendationService>() // Assuming you have a RecommendationService in the Application layer
+            .AddSingleton<UserService>() 
+            .AddSingleton<MovieService>()
+            .AddSingleton<RecommendationService>()
             .AddScoped<IMovieRepository, MovieRepository>()
+            .AddScoped<IUserRepository, UserRepository>()
+            .AddScoped<IMovieHandler, MovieHandler>()
+            .AddScoped<IRecommendationHandler, RecommendationHandler>()
             .AddDbContext<MovieDbContext>()
             .BuildServiceProvider();
 
