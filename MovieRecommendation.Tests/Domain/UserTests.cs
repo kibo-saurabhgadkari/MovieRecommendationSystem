@@ -1,4 +1,7 @@
-﻿using MovieRecommendation.Domain.Entities;
+﻿using Moq;
+using MovieRecommendation.Domain.Entities;
+using MovieRecommendation.Domain.Repository;
+using MovieRecommendation.Domain.Services;
 using NUnit.Framework;
 
 namespace MovieRecommendation.Tests.Domain
@@ -10,15 +13,16 @@ namespace MovieRecommendation.Tests.Domain
         public void User_Can_Be_Created()
         {
             // Arrange
-            var userId = 1;
             var userName = "john_doe";
+            var password = "password";
 
             // Act
-            var user = new User(userId, userName);
+            var user = new User(userName, password);
 
             // Assert
-            Assert.AreEqual(userId, user.UserId);
             Assert.AreEqual(userName, user.UserName);
-        }
+            Assert.AreEqual(password, user.Password);
+        }     
+
     }
 }

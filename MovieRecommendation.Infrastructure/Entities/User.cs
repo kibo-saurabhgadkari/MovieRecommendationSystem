@@ -7,5 +7,8 @@
         public List<Role> Roles { get; set; }
         public List<Movie> WatchedMovies { get; set; }
         public UserPreferences Preferences { get; set; }
+        public string Password { get; set; }
+
+        //
     }
 }

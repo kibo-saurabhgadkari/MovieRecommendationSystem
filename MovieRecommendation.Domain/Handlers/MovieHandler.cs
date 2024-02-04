@@ -1,10 +1,5 @@
 ﻿using MovieRecommendation.Domain.Entities;
 using MovieRecommendation.Domain.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MovieRecommendation.Domain.Handlers
 {
@@ -14,7 +9,7 @@ namespace MovieRecommendation.Domain.Handlers
         Movie GetMovieById(int id);
         Movie GetMovieByTitle(string title);
         List<Movie> GetAllMovies();
-        void AddMovie(string title);
+        void AddMovie(string title, List<Genre> generes, List<Director> directors);
 
     }
     public class MovieHandler : IMovieHandler
@@ -26,9 +21,9 @@ namespace MovieRecommendation.Domain.Handlers
             _movieRepository = movieRepository;
         }
 
-        public void AddMovie(string title)
+        public void AddMovie(string title, List<Genre> generes,List<Director> directors)
         {
-            var movie = new Movie(title);
+            var movie = new Movie(title, generes, directors);
             _movieRepository.AddMovie(movie);
         }
 

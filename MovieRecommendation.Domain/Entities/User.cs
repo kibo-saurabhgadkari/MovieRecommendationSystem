@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace MovieRecommendation.Domain.Entities
+﻿namespace MovieRecommendation.Domain.Entities
 {
     public class User
     {
@@ -9,11 +7,12 @@ namespace MovieRecommendation.Domain.Entities
         public List<Role> Roles { get; set; }
         public List<Movie> WatchedMovies { get; set; }
         public UserPreferences Preferences { get; set; }
+        public string Password { get; set; }
 
-        public User(int userId, string userName) 
+        public User(string userName, string password) 
         {
-            UserId = userId;
             UserName = userName;
+            Password = password;
         }
     }
 }

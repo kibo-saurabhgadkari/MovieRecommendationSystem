@@ -1,6 +1,5 @@
 ﻿using MovieRecommendation.Domain.Entities;
 using MovieRecommendation.Domain.Handlers;
-using MovieRecommendation.Domain.Repository;
 
 namespace MovieRecommendation.Application
 {

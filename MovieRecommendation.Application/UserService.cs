@@ -1,18 +1,28 @@
 ﻿
 using MovieRecommendation.Domain.Entities;
+using MovieRecommendation.Domain.Services;
 
 namespace MovieRecommendation.Application
 {
     public class UserService
     {
-        public User LoginUser(string? loginUsername, string? loginPassword)
+        public readonly AuthenticationService _authenticationService;
+        public readonly RegistrationService _registrationService;
+        public UserService(AuthenticationService authenticationService, RegistrationService registrationService)
         {
-            throw new NotImplementedException();
+            _authenticationService = authenticationService;
+            _registrationService = registrationService;
         }
 
-        public void RegisterUser(string? username, string? password)
+        public AuthenticationResult LoginUser(string loginUsername, string loginPassword)
         {
-            throw new NotImplementedException();
+            return _authenticationService.Authenticate(loginUsername, loginPassword);
+        }
+
+        public AuthenticationResult RegisterUser(string username, string password)
+        {
+            //retrun _registrationService.RegisterUser(username, password);
+            return _registrationService.RegisterUser(username, password);
         }
     }
 }

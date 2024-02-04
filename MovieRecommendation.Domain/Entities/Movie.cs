@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace MovieRecommendation.Domain.Entities
+﻿namespace MovieRecommendation.Domain.Entities
 {
     public class Movie
     {
@@ -9,9 +7,11 @@ namespace MovieRecommendation.Domain.Entities
         public List<Genre> Genres { get; set; }
         public List<Director> Directors { get; set; }
 
-        public Movie(string title)
+        public Movie(string title, List<Genre> genres, List<Director> directors)
         {
             Title = title;
-        }
+            Genres = genres;
+            Directors = directors;
+        }        
     }
 }
