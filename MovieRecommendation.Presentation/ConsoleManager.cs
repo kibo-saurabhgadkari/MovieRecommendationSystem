@@ -4,68 +4,71 @@ using MovieRecommendation.Domain.Entities;
 
 public class ConsoleManager
 {
-    private readonly UserService _userService;
-    private readonly MovieService _movieService;
-    private readonly RecommendationService _recommendationService;
+    private readonly IUserService _userService;
+    private readonly IMovieService _movieService;
+    private readonly IRecommendationService _recommendationService;
+    private readonly IConsoleWrapper _consoleWrapper;
 
-    public ConsoleManager(UserService userService, MovieService movieService, RecommendationService recommendationService)
+
+    public ConsoleManager(IUserService userService, IMovieService movieService, IRecommendationService recommendationService, IConsoleWrapper consoleWrapper)
     {
         _userService = userService;
         _movieService = movieService;
         _recommendationService = recommendationService;
+        _consoleWrapper = consoleWrapper;
     }
 
     // ConsoleManager.cs
     public void Run()
     {
-        AuthenticationResult loggedInUser = null;
+        AuthenticationResult result = null;
 
-        Console.WriteLine("Welcome to the Movie Recommendation System!");
+        _consoleWrapper.WriteLine("Welcome to the Movie Recommendation System!");
 
         int choice;
         do
         {
-            Console.WriteLine("Choose an action\n1.Register\n2.Login");
+            _consoleWrapper.WriteLine("Choose an action\n1.Register\n2.Login");
 
-        } while (!Int32.TryParse(Console.ReadLine(), out choice) || (choice < 1 || choice > 2));
+        } while (!Int32.TryParse(_consoleWrapper.ReadLine(), out choice) || (choice < 1 || choice > 2));
 
         switch (choice)
         {
             case 1:
-                loggedInUser = Register();
+                result = Register();
                 break;
             case 2:
-                loggedInUser = Login();
+                result = Login();
                 break;
         }
 
-        while (loggedInUser == null)
+        while (result == null || !result.IsAuthenticated)
         {
-            Console.WriteLine("Login or Registration failed. Choose an action\n1.Register\n2.Login");
+            _consoleWrapper.WriteLine("Login or Registration failed. Choose an action\n1.Register\n2.Login");
 
             do
             {
-                Console.WriteLine("Invalid input, please try again");
+                _consoleWrapper.WriteLine("Invalid input, please try again");
 
-            } while (!Int32.TryParse(Console.ReadLine(), out choice) || (choice < 1 || choice > 2));
+            } while (!Int32.TryParse(_consoleWrapper.ReadLine(), out choice) || (choice < 1 || choice > 2));
 
             switch (choice)
             {
                 case 1:
-                    loggedInUser = Register();
+                    result = Register();
                     break;
                 case 2:
-                    loggedInUser = Login();
+                    result = Login();
                     break;
             }
         }
 
         // Choose from available actions
-        Console.WriteLine("Choose an action\n1.View Available Movies\n2.View Recommendations");
+        _consoleWrapper.WriteLine("Choose an action\n1.View Available Movies\n2.View Recommendations");
 
-        while (!Int32.TryParse(Console.ReadLine(), out choice) || (choice < 1 || choice > 2))
+        while (!Int32.TryParse(_consoleWrapper.ReadLine(), out choice) || (choice < 1 || choice > 2))
         {
-            Console.WriteLine("Invalid input, please try again");
+            _consoleWrapper.WriteLine("Invalid input, please try again");
         }
 
         switch (choice)
@@ -74,53 +77,78 @@ public class ConsoleManager
                 ViewAvailableMovies();
                 break;
             case 2:
-                ViewRecommendations(loggedInUser);
+                ViewRecommendations(result);
                 break;
         }        
     }
 
-    private void ViewRecommendations(AuthenticationResult loggedInUser)
+    internal void ViewRecommendations(AuthenticationResult loggedInUser)
     {
         // View Recommendations
-        Console.WriteLine("Viewing Recommendations:");
+        _consoleWrapper.WriteLine("Viewing Recommendations:");
         var recommendations = _recommendationService.GetRecommendations(loggedInUser.UserId);
         foreach (var recommendation in recommendations)
         {
-            Console.WriteLine($"{recommendation.Movie.Title} - {recommendation.Movie.Title} - {recommendation.Movie.Title} - RelevanceScore({recommendation.RelevanceScore})");
+            _consoleWrapper.WriteLine($"{recommendation.Movie.Title} - {recommendation.Movie.Title} - {recommendation.Movie.Title} - RelevanceScore({recommendation.RelevanceScore})");
         }
     }
 
-    private void ViewAvailableMovies()
+    internal void ViewAvailableMovies()
     {
         // Explore Movies
         var movies = _movieService.GetAllMovies();
-        Console.WriteLine("Available Movies:");
+        _consoleWrapper.WriteLine("Available Movies:");
         foreach (var movie in movies)
         {
-            Console.WriteLine($"{movie.MovieId}. {movie.Title} - {movie.Genres} - {movie.Directors}");
+            _consoleWrapper.WriteLine($"{movie.MovieId}. {movie.Title} - {movie.Genres} - {movie.Directors}");
         }
     }
 
-    private AuthenticationResult Register()
+    internal AuthenticationResult Register()
     {
         // User Registration
-        Console.WriteLine("Register a new user:");
-        Console.Write("Enter username: ");
-        string username = Console.ReadLine();
-        Console.Write("Enter password: ");
-        string password = Console.ReadLine();
+        _consoleWrapper.WriteLine("Register a new user:");
+        _consoleWrapper.Write("Enter username: ");
+        string username = _consoleWrapper.ReadLine();
+        _consoleWrapper.Write("Enter password: ");
+        string password = _consoleWrapper.ReadLine();
         return _userService.RegisterUser(username, password);
     }
 
-    private MovieRecommendation.Domain.Entities.AuthenticationResult Login()
+    internal MovieRecommendation.Domain.Entities.AuthenticationResult Login()
     {
         // User Login
-        Console.WriteLine("Login:");
-        Console.Write("Enter username: ");
-        string loginUsername = Console.ReadLine();
-        Console.Write("Enter password: ");
-        string loginPassword = Console.ReadLine();
+        _consoleWrapper.WriteLine("Login:");
+        _consoleWrapper.Write("Enter username: ");
+        string loginUsername = _consoleWrapper.ReadLine();
+        _consoleWrapper.Write("Enter password: ");
+        string loginPassword = _consoleWrapper.ReadLine();
         var loggedInUser = _userService.LoginUser(loginUsername, loginPassword);
         return loggedInUser;
+    }
+
+    public interface IConsoleWrapper
+    {
+        string ReadLine();
+        void WriteLine(string value);
+        void Write(string value);
+    }
+
+    public class ConsoleWrapper : IConsoleWrapper
+    {
+        public string ReadLine()
+        {
+            return Console.ReadLine();
+        }
+
+        public void WriteLine(string value)
+        {
+            Console.WriteLine(value);
+        }
+
+        public void Write(string value)
+        {
+            Console.Write(value);
+        }
     }
 }

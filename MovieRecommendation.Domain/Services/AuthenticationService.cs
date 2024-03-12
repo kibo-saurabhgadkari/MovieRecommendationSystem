@@ -34,23 +34,25 @@ namespace MovieRecommendation.Domain.Services
         {
             AuthenticationResult result = new AuthenticationResult();
 
-            var user = _userRepository.GetUserByUserName(userName);
+            try
+            {
 
-            if (user == null)
+                var user = _userRepository.GetUserByUserName(userName);
+                
+                var storedHash = user.Password;
+
+                if (HashPassword(enteredPassword) == storedHash)
+                {
+                    result.IsAuthenticated = true;
+                    result.UserId = user.UserId;
+                    result.Username = user.UserName;
+                    result.Message = "Authenticated successfully";
+                }
+            }
+            catch (Exception e)
             {
                 result.IsAuthenticated = false;
                 result.Message = "User does not exist";
-                return result;
-            }
-
-            var storedHash = user.Password;
-
-            if (HashPassword(enteredPassword) == storedHash)
-            {
-                result.IsAuthenticated = true;
-                result.UserId = user.UserId;
-                result.Username = user.UserName;
-                result.Message = "Authenticated successfully";
             }
 
             return result;

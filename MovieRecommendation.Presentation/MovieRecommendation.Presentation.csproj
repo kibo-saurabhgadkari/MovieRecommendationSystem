@@ -17,6 +17,9 @@
   <ItemGroup>
     <ProjectReference Include="..\MovieRecommendation.Application\MovieRecommendation.Application.csproj" />
     <ProjectReference Include="..\MovieRecommendation.Infrastructure\MovieRecommendation.Infrastructure.csproj" />
+	  <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		  <_Parameter1>"MovieRecommendation.Tests"</_Parameter1>
+	  </AssemblyAttribute>
   </ItemGroup>
 
 </Project>

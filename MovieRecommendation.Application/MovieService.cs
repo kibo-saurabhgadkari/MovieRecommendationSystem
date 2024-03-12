@@ -3,7 +3,12 @@ using MovieRecommendation.Domain.Handlers;
 
 namespace MovieRecommendation.Application
 {
-    public class MovieService
+    public interface IMovieService
+    {
+        List<Movie> GetAllMovies();
+        void AddMovie(string title, List<Genre> generes, List<Director> directors);
+    }
+    public class MovieService : IMovieService
     {
         IMovieHandler _movieHandler;
 

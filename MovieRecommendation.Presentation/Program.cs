@@ -7,6 +7,7 @@ using MovieRecommendation.Domain.Services;
 using MovieRecommendation.Infrastructure;
 using MovieRecommendation.Infrastructure.Repository;
 using MovieRecommendation.Presentation;
+using static ConsoleManager;
 
 class Program
 {
@@ -14,9 +15,10 @@ class Program
     {
         var serviceProvider = new ServiceCollection()
             .AddSingleton<ConsoleManager>()
-            .AddSingleton<UserService>() 
-            .AddSingleton<MovieService>()
-            .AddSingleton<RecommendationService>()
+            .AddSingleton<IConsoleWrapper, ConsoleWrapper>()
+            .AddSingleton<IUserService, UserService>() 
+            .AddSingleton<IMovieService, MovieService>()
+            .AddSingleton<IRecommendationService, RecommendationService>()
             .AddSingleton<RegistrationService>()
             .AddScoped<IMovieRepository, MovieRepository>()
             .AddScoped<IUserRepository, UserRepository>()

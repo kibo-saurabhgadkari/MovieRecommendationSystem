@@ -6,6 +6,7 @@
         public string Title { get; set; }
         public List<Genre> Genres { get; set; }
         public List<Director> Directors { get; set; }
+        //public List<User> WatchedByUsers { get; set; }
 
         public Movie(string title, List<Genre> genres, List<Director> directors)
         {

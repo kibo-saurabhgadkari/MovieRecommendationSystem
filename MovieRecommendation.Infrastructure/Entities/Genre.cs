@@ -4,6 +4,6 @@
     {
         public int GenreId { get; set; }
         public string GenreName { get; set; }
-        List<Movie> Movies { get; set; }
+        public List<Movie> Movies { get; set; }
     }
 }

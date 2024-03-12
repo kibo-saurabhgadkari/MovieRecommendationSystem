@@ -3,7 +3,12 @@ using MovieRecommendation.Domain.Handlers;
 
 namespace MovieRecommendation.Application
 {
-    public class RecommendationService
+    public interface IRecommendationService
+    {
+        List<Recommendation> GetRecommendations(int userId);
+    }
+
+    public class RecommendationService : IRecommendationService
     {
         IRecommendationHandler _recommendationHandler;
 

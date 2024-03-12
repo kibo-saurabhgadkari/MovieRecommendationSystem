@@ -4,7 +4,13 @@ using MovieRecommendation.Domain.Services;
 
 namespace MovieRecommendation.Application
 {
-    public class UserService
+    public interface IUserService
+    {
+        AuthenticationResult LoginUser(string loginUsername, string loginPassword);
+        AuthenticationResult RegisterUser(string username, string password);
+    }
+
+    public class UserService : IUserService
     {
         public readonly AuthenticationService _authenticationService;
         public readonly RegistrationService _registrationService;

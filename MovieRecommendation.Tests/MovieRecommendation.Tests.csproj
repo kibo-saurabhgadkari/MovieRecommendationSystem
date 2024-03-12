@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="NUnit" Version="3.13.3" />
@@ -16,12 +24,14 @@
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Infrastructure\" />
+    <Folder Include="Presentation\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MovieRecommendation.Application\MovieRecommendation.Application.csproj" />
     <ProjectReference Include="..\MovieRecommendation.Domain\MovieRecommendation.Domain.csproj" />
     <ProjectReference Include="..\MovieRecommendation.Infrastructure\MovieRecommendation.Infrastructure.csproj" />
+    <ProjectReference Include="..\MovieRecommendation.Presentation\MovieRecommendation.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
